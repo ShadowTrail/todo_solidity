@@ -1,0 +1,40 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Users\ANJALI LAPTOP\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add global ethers
+
+PATH: 
+  C:\Python312\Scripts\;C:\Python312\;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Python;C:\ProgramData\chocolatey\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Program Files\Git\bin\;C:\Program Files\Java\jdk-20\bin;C:\spark\spark-3.3.2-bin-hadoop3\bin;C:\spark\spark-3.3.2-bin-hadoop3\python;C:\Program Files\nodejs\;C:\Users\ANJALI LAPTOP\.console-ninja\.bin;C:\Program Files\nodejs;C:\Users\ANJALI LAPTOP\AppData\Local\Programs\Python\Python311\Scripts\;C:\Users\ANJALI LAPTOP\AppData\Local\Programs\Python\Python311\;C:\spark\spark-3.3.2-bin-hadoop3\bin;C:\Users\ANJALI LAPTOP\AppData\Local\Programs\Microsoft VS Code\bin;;C:\Users\ANJALI LAPTOP\AppData\Local\Microsoft\WindowsApps;C:\Users\ANJALI LAPTOP\AppData\Roaming\npm
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  20.14.0
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: EPERM: operation not permitted, unlink 'C:\Users\ANJALI LAPTOP\Desktop\todoSolidity\todo_solidity\node_modules\bufferutil\prebuilds\win32-x64\node.napi.node'
+
+npm manifest: 
+  {
+    "name": "solidity-todolist-app",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+      "truffle": "^5.5.21"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

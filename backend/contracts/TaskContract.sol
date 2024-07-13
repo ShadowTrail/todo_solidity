@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.15;
+pragma solidity ^0.8.0;
 
 // task: { id: 0, taskText: 'clean', isDeleted: false },
 
@@ -25,18 +25,18 @@ contract TaskContract {
   }
 
   // get tasks that are mine and not deleted
-  function getmyTasks() external view returns (Task[] memory) {
+  function getMyTasks() external view returns (Task[] memory) {
     Task[] memory temporary = new Task[](tasks.length);
-    uint counter = 0;
+    uint256 counter = 0;
 
-    for(uint i = 0;i <= tasks.length; i++){
+    for(uint256 i = 0; i < tasks.length; i++){
       if(taskToOwner[i] == msg.sender && tasks[i].isDeleted == false){
          temporary[counter] = tasks[i];
         counter ++;
       }
      }
     Task[] memory result = new Task[](counter);
-    for(uint i = 0; i < counter; i++){
+    for(uint256 i = 0; i < counter; i++){
       result[i] = temporary[i];
     }
     return result;

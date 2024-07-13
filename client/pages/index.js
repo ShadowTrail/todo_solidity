@@ -4,8 +4,7 @@ import TodoList from '../components/TodoList'
 import { TaskContractAddress } from '../config'
 import TaskAbi from '../../backend/build/contracts/TaskContract.json'
 import { ethers } from 'ethers'
-import { useState } from 'react'
-
+import { useEffect, useState } from 'react'
 /* 
 const tasks = [
   { id: 0, taskText: 'clean', isDeleted: false }, 
@@ -20,6 +19,12 @@ export default function Home() {
   const [currentAccount, setCurrentAccount] = useState('')
   const [input, setInput] = useState('')
   const [tasks, setTasks] = useState([])
+
+  useEffect(() => {
+    connectWallet()
+    getAllTasks()
+  }, [])
+  
 
   // Calls Metamask to connect wallet on clicking Connect Wallet button
   const connectWallet = async () => {
@@ -54,8 +59,27 @@ export default function Home() {
 
   // Just gets all the tasks from the contract
   const getAllTasks = async () => {
+    try{
+      const {ethereum} = window
+      if (ethereum) {
+        const provider = new ethers.BrowserProvider(window.ethereum)
+        const signer = await provider.getSigner()
+        const TaskContract = new ethers.Contract(
+          TaskContractAddress,
+          TaskAbi.abi,
+          signer
+        )
+        let allTasks = await TaskContract.getMyTasks()
+        // console.log(allTasks)
+        setTasks(allTasks)
+        console.log("Task set successfully")
+      } else{
+        console.log("Ethereum object does not exist")
+      }
 
-
+    } catch (error){
+      console.log(error)
+    }
   }
 
   // Add tasks from front-end onto the blockchain
@@ -71,13 +95,12 @@ export default function Home() {
       const {ethereum} = window
       if (ethereum) {
         const provider = new ethers.BrowserProvider(window.ethereum)
-        const signer = provider.getSigner()
+        const signer = await provider.getSigner()
         const TaskContract = new ethers.Contract(
           TaskContractAddress,
           TaskAbi.abi,
           signer
         )
-      
       TaskContract.addTask(task.taskText, task.isDeleted)
       .then(res =>{
         setTasks([...tasks, task])
@@ -93,17 +116,38 @@ export default function Home() {
     } catch(error){
       console.log(error)
     }
+    setInput('')
   }
 
   // Remove tasks from front-end by filtering it out on our "back-end" / blockchain smart contract
   const deleteTask = key => async () => {
+    try{
+      const {ethereum} = window
+      if (ethereum) {
+        const provider = new ethers.BrowserProvider(window.ethereum)
+        const signer = await provider.getSigner()
+        const TaskContract = new ethers.Contract(
+          TaskContractAddress,
+          TaskAbi.abi,
+          signer
+        )
+        const deleteTaskTx = await TaskContract.deleteTask(key, true)
+        console.log('Successfully deleted', deleteTaskTx)
 
+        let allTasks = await TaskContract.getMyTasks()
+        setTasks(allTasks)
+    } else{
+      console.log('Ethereum object does not exist.')
+    }
+  }catch(error){
+      console.log(error)
+    }
   }
 
   return (
     <div className='bg-[#97b5fe] h-screen w-screen flex justify-center py-6'>
       {!isUserLoggedIn ? <ConnectWalletButton connectWallet={connectWallet} /> :
-        correctNetwork ? <TodoList input = {input} setInput={setInput} addTask={addTask}/> : <WrongNetworkMessage />}
+        correctNetwork ? <TodoList tasks={tasks} input={input} setInput={setInput} addTask={addTask} deleteTask={deleteTask}/> : <WrongNetworkMessage />}
     </div>
   )
 }
